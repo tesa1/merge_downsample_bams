@@ -24,10 +24,12 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
 
 
  ## Merging and indexing of filtered bam files from Category A ##
-Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
+Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. 
+Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very 
+big file as you are merging 10 bam files together. 
 
  ```bash
-samtools merge -@10 foxa1_healthy.bam wz2086.filtered.bam wz2088.filtered.bam wz2090.filtered.bam 
+samtools merge -@8 foxa1_healthy.bam wz2086.filtered.bam wz2088.filtered.bam wz2090.filtered.bam 
 
 samtools index foxa1_healthy.bam
 ```
@@ -46,3 +48,13 @@ cat foxa1_healthy.flag
 ![Screenshot](cat_foxa1_healthy_flagstat.png)
 
 ## Do the same for Category B files ## 
+
+```bash
+samtools merge -@8 foxa1_primary.bam file1.bam file2.bam file3.bam file4.bam 
+
+samtools index foxa1_primary.bam
+
+samtools flagstat foxa1_primary.bam > foxa1_primary.flag
+```
+
+Based on the top line in the foxa1_primary.flag file you can calculate the 
