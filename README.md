@@ -4,7 +4,7 @@ Provided are the Zwart lab approved basic steps to merge bam files from a ChIP-s
 
 ## Vignette Info
 
-Here we show the basic steps for merging filtered bam files in two different categories so that they can be compared in an ESeq/deepTools profile or heatmap for specific regions. This is a real-world example using real-world data **(thanks, Yanyun Zhu!)**. The data come from a ChIP-seq experiments of normal (healthy) and primary prostate cancer samples. Please do not disseminate or interpret these data, they are for instructional purposes only. 
+Here we show the basic steps for merging filtered bam files in two different categories so that they can be compared in an ESeq/deepTools profile or heatmap for specific regions. This is a real-world example using real-world data **(thanks, Yanyun Zhu!)**. The data come from FOXA1 ChIP-seq experiments of normal (healthy) and primary prostate cancer samples. Please do not disseminate or interpret these data, they are for instructional purposes only. 
 
 Requirements for this tutorial are familiarity with:
 
@@ -23,12 +23,11 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
 **Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons**. In this case, ask for bioinformatic help.
 
 
-
  ## Merging and indexing of filtered bam files from Category A with samtools ##
-Use samtools merge to create a new file `foxa1_healthy.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
+Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
  ```bash
-samtools merge -@10 foxa1_healthy.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam 
+samtools merge -@10 foxa1_healthy.bam wz2086.filtered.bam wz2088.filtered.bam wz2090.filtered.bam 
 
 samtools index foxa1_healthy.bam
 ```
@@ -52,18 +51,21 @@ For this example we simply divide 20M by the number of newly merged file mapped 
 
 
 ```bash
-samtools view -s 0.36 foxa1_healthy_3.bam > foxa1_healthy_3_ds.bam
+samtools view -s 0.36 -b foxa1_healthy.bam > foxa1_healthy_ds.bam
 
-samtools index foxa1_healthy_3_ds.bam
+samtools index foxa1_healthy_ds.bam
 ```
 
+## Double check the mapped reads of the newly dowsampled merged Category A file are close to 20M ##
+Samtools will downsample reads randomly so you will never get exactly 20M reads, but you will get close. Double check that you've managed to do that.
 
-sss
-Run hichipper on the h3k27ac_outputs folder from HiC-Pro.
 ```bash
-hichipper --out h3k27ac_hichipper --make-ucsc  hichipper.yaml
+samtools flagstat foxa1_healthy_ds.bam > foxa1_healthy_ds.flag
+
+cat foxa1_healthy_ds.flag
 ```
 
+![Screenshot](cat_foxa1_healthy_ds_flagstat.png)
 
  ## Running a downsample experiment on the data ##
  
