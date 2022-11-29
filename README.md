@@ -28,7 +28,7 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
 Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
  ```bash
-samtools merge -@8 foxa1_healthy_2.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam wz2120.mq20.bam wz2136.mq20.bam wz2138.mq20.bam wz2139.mq20.bam wz2163.mq20.bam wz2175.mq20.bam 
+samtools merge -@10 foxa1_healthy_3.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam 
 
 samtools index foxa1_healthy_2.bam
 ```
