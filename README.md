@@ -1,4 +1,4 @@
-# Zwart lab standard workflow to merge ChIP-seq bam files for use in comparison profile plots -- instructions for the RHPC server
+# Zwart lab standard workflow to merge ChIP-seq bam files for use in comparison profile/tornado heatmap plots -- instructions for the RHPC server
 
 Provided are the Zwart lab approved basic steps to merge bam files from a ChIP-seq experiment to make comparison profile plots when running on the RHPC server.
 
@@ -25,26 +25,26 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
 
 
  ## Merging and indexing of filtered bam files from Category A with samtools ##
-Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
+Use samtools merge to create a new file `foxa1_healthy.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
  ```bash
-samtools merge -@10 foxa1_healthy_3.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam 
+samtools merge -@10 foxa1_healthy.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam 
 
-samtools index foxa1_healthy_2.bam
+samtools index foxa1_healthy.bam
 ```
 
 
  ## Check the mapped reads of the newly merged Category A file with samtools ##
 Now use samtools flagstat to get the number of mapped reads in your new file. 
-The new file `foxa1_healthy_2.bam` has 191579221 mapped reads. 
+The new file `foxa1_healthy.bam` has X mapped reads. 
 
  ```bash
-samtools flagstat foxa1_healthy_2.bam > foxa1_healthy_2.flag
+samtools flagstat foxa1_healthy_3.bam > foxa1_healthy_3.flag
 
-cat foxa1_healthy_2.flag
+cat foxa1_healthy_3.flag
 ```
 
-![Screenshot](cat_foxa1_healthy_2_flagstat.png)
+![Screenshot](cat_foxa1_healthy_flagstat.png)
 
 ## Downsample the Category A merged file to around 20 million reads and index the file ##
 Next, we need to downample the new file to a managable size which is similar to most regular individual ChIP-seq samples in the lab (~20M reads). To do this we use samtools view subsample flag with the fraction of sample needed to reach target of 20M reads. 
