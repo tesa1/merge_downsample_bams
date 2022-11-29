@@ -35,7 +35,7 @@ samtools index foxa1_healthy.bam
 
  ## Check the mapped reads of the newly merged Category A file with samtools ##
 Now use samtools flagstat to get the number of mapped reads in your new file. 
-The new file `foxa1_healthy.bam` has X mapped reads. 
+The new file `foxa1_healthy.bam` has 55524941 mapped reads. 
 
  ```bash
 samtools flagstat foxa1_healthy.bam > foxa1_healthy.flag
@@ -67,32 +67,5 @@ cat foxa1_healthy_ds.flag
 
 ![Screenshot](cat_foxa1_healthy_ds_flagstat.png)
 
- ## Running a downsample experiment on the data ##
- 
-Need to use HTSeq to downsample the paired-end fastq files 
 
-```bash
-# install htseq with bioconda
-conda create -c bioconda --name htseq htseq
-conda activate htseq
-```
-
-For downsampling to 25% of reads
-```bash
-gunzip sample_R1.fastq.gz
-gunzip sample_R1.fastq.gz
-python subsample.py 0.25 sample_R1.fastq sample_R2.fastq sample_R1_ds25.fastq sample_R2_ds25.fastq
-gzip -c sample_R1_ds25.fastq > sample_R1_ds25.fastq.gz
-gzip -c sample_R2_ds25.fastq > sample_R2_ds25.fastq.gz
-```
-
-The subsample.py script is from the developer of HTSeq 
-http://seqanswers.com/forums/archive/index.php/t-12070.html: 
-It will throw a 'StopIteration' error but the files will be fine.
-
-Next, run HiC-Pro on the downsampled samples
-
-```bash
-/home/t.severson/tools/HiC-Pro-2.11.1.install/bin/HiC-Pro -i ds_25/ -o ds_25_outputs -c config-hicpro.txt
-````
 Footer
