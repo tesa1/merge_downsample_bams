@@ -23,7 +23,7 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
 Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons. In this case, ask for bioinformatic help.
 
 
- ## Merging and indexing of filtered bam (MQ20) files from Category A ##
+## Merging and indexing of filtered bam (MQ20) files from Category A ##
 Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. 
 Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very 
 big file as you are merging many bam files together. 
@@ -34,7 +34,7 @@ samtools merge -@8 foxa1_healthy.bam file1.filtered.bam file2.filtered.bam file3
 samtools index foxa1_healthy.bam
 ```
 
- ## Check the mapped reads of the newly merged Category A file ##
+## Check the mapped reads of the newly merged Category A file ##
 Now use samtools flagstat to get the number of mapped reads in your new file. 
 The new file `foxa1_healthy.bam` has 55524941 mapped reads. 
 
