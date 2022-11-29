@@ -20,7 +20,7 @@ We also assume you have looked at the snakePipes ChIP-seq pipeline /QC_report/QC
 
 In this tutorial for 2 categories of samples (Category A and B) we will merge the files of interest, index them, check their mapped reads and downsample accordingly.
 
-**Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons**. In this case, ask for bioinformatic help.
+Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons. In this case, ask for bioinformatic help.
 
 
  ## Merging and indexing of filtered bam (MQ20) files from Category A ##
@@ -65,7 +65,7 @@ cat foxa1_healthy_ds.flag
 
 ![Screenshot](cat_foxa1_healthy_ds_flagstat.png)
 
-## Clean up -- remove non-downsampeled files because they're very big ##
+## Clean up -- remove non-downsampled files because they're very big ##
 
 ```bash
 rm foxa1_healthy.bam
