@@ -18,20 +18,32 @@ This vignette assumes you have aligned and filtered (MQ20) bam files for your sa
 
 We also assume you have looked at the snakePipes ChIP-seq pipeline /QC_report/QC_report_all.tsv file for your experiments and have determined the read counts are enough (at least 20M reads/sample) and that QC metrics like Fraction of Reads in Peaks (FRiP) are acceptable and roughly similar between experiments (within ChIP-seq factors, eg. H3K27ac) and not significantly different between comparisons. If not or you do not know, ask for bioinformatic help, you may need to do additional sequencing.
 
+In this tutorial for 2 categories of samples (A and B) we will merge the files of interest, index them, check their mapped reads and downsample accordingly.
 
- ## Merging of filtered bam files from category A with samtools ##
-Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 10 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
+**Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons**. In this case, ask for bioinformatic help.
+
+
+
+ ## Merging and indexing of filtered bam files from category A with samtools ##
+Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
  ```bash
-samtools merge -@10 foxa1_healthy_2.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam wz2120.mq20.bam wz2136.mq20.bam wz2138.mq20.bam wz2139.mq20.bam wz2163.mq20.bam wz2175.mq20.bam 
+samtools merge -@8 foxa1_healthy_2.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam wz2120.mq20.bam wz2136.mq20.bam wz2138.mq20.bam wz2139.mq20.bam wz2163.mq20.bam wz2175.mq20.bam 
+
+samtools index foxa1_healthy_2.bam
 ```
 
-![Screenshot](test_screen.png)
 
-This will create h3k27ac_outputs folder with mapping and HiC analysis results
+ ## Check the mapped reads of the newly merged category A file with samtools ##
+Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
+ ```bash
+samtools flagstat foxa1_healthy_2.bam > foxa1_healthy_2.flag
 
-## Installation and use of hichipper for HiC-Pro results ##
+cat foxa1_healthy_2.flag
+```
+![Screenshot](cat_foxa1_healthy_2_flagstat.png)
+## Next, ##
 
 Steps for analyzing of Hi-ChIP data from HiC Pro using hichipper using a sample manifest file (.yaml). Hichipper uses macs2 to call peaks. I generated peaks using the Mubach method (i.e. EACH,ALL).
 Using called peaks and restriction fragment locations as input and the output from HiC-Pro output that can be used to:
