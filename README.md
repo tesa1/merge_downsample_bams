@@ -18,13 +18,13 @@ This vignette assumes you have aligned and filtered (MQ20) bam files for your sa
 
 We also assume you have looked at the snakePipes ChIP-seq pipeline /QC_report/QC_report_all.tsv file for your experiments and have determined the read counts are enough (at least 20M reads/sample) and that QC metrics like Fraction of Reads in Peaks (FRiP) are acceptable and roughly similar between experiments (within ChIP-seq factors, eg. H3K27ac) and not significantly different between comparisons. If not or you do not know, ask for bioinformatic help, you may need to do additional sequencing.
 
-In this tutorial for 2 categories of samples (A and B) we will merge the files of interest, index them, check their mapped reads and downsample accordingly.
+In this tutorial for 2 categories of samples (Category A and B) we will merge the files of interest, index them, check their mapped reads and downsample accordingly.
 
 **Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons**. In this case, ask for bioinformatic help.
 
 
 
- ## Merging and indexing of filtered bam files from category A with samtools ##
+ ## Merging and indexing of filtered bam files from Category A with samtools ##
 Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
  ```bash
@@ -34,30 +34,30 @@ samtools index foxa1_healthy_2.bam
 ```
 
 
- ## Check the mapped reads of the newly merged category A file with samtools ##
-Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
+ ## Check the mapped reads of the newly merged Category A file with samtools ##
+Now use samtools flagstat to get the number of mapped reads in your new file. 
+The new file `foxa1_healthy_2.bam` has 191579221 mapped reads. 
 
  ```bash
 samtools flagstat foxa1_healthy_2.bam > foxa1_healthy_2.flag
 
 cat foxa1_healthy_2.flag
 ```
+
 ![Screenshot](cat_foxa1_healthy_2_flagstat.png)
-## Next, ##
 
-Steps for analyzing of Hi-ChIP data from HiC Pro using hichipper using a sample manifest file (.yaml). Hichipper uses macs2 to call peaks. I generated peaks using the Mubach method (i.e. EACH,ALL).
-Using called peaks and restriction fragment locations as input and the output from HiC-Pro output that can be used to:
-  - Determine library quality
-  - Visualize loops with strength and confidence metrics
+## Downsample the Category A merged file to around 20 million reads and index the file ##
+Next, we need to downample the new file to a managable size which is similar to most regular individual ChIP-seq samples in the lab (~20M reads). To do this we use samtools view subsample flag with the fraction of sample needed to reach target of 20M reads. 
+For this example we simply divide 20M by the number of newly merged file mapped reads. 20,000,000/191,579,221 = 0.104395455
 
-Install hichipper using instructions from: https://hichipper.readthedocs.io/en/latest/
 
 ```bash
-virtualenv -p /usr/bin/python2.7 venv
-source venv/bin/activate
-pip install hichipper
-hichipper --version
+samtools view -s 0.10 foxa1_healthy_2.bam > foxa1_healthy_2_ds.bam
+
+samtools index foxa1_healthy_2_ds.bam
 ```
+
+
 sss
 Run hichipper on the h3k27ac_outputs folder from HiC-Pro.
 ```bash
