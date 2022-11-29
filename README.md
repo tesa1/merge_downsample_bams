@@ -85,3 +85,5 @@ samtools index foxa1_primary_ds.bam
 samtools flagstat foxa1_primary_ds.bam > foxa1_primary_ds.flag
 ```
 
+## You can now use these downsampled bam files to look at comparison plots ##
+Note, for deeptools, you'll first need to convert your files to bigwig. 
