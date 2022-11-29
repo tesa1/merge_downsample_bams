@@ -45,27 +45,4 @@ cat foxa1_healthy.flag
 
 ![Screenshot](cat_foxa1_healthy_flagstat.png)
 
-## Downsample the Category A merged file to around 20 million reads and index the file ##
-Next, we need to downample the new file to a managable size which is similar to most regular individual ChIP-seq samples in the lab (~20M reads). To do this we use samtools view subsample flag with the fraction of sample needed to reach target of 20M reads. 
-For this example we simply divide 20M by the number of newly merged file mapped reads. 20,000,000/55,524,941 = 0.360198
-
-
-```bash
-samtools view -s 0.36 -b foxa1_healthy.bam > foxa1_healthy_ds.bam
-
-samtools index foxa1_healthy_ds.bam
-```
-
-## Double check the mapped reads of the newly dowsampled merged Category A file are close to 20M ##
-Samtools will downsample reads randomly so you will never get exactly 20M reads, but you will get close. Double check that you've managed to do that.
-
-```bash
-samtools flagstat foxa1_healthy_ds.bam > foxa1_healthy_ds.flag
-
-cat foxa1_healthy_ds.flag
-```
-
-![Screenshot](cat_foxa1_healthy_ds_flagstat.png)
-
-
-Footer
+## Do the same for Category B files ## 
