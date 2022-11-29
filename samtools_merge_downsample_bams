@@ -48,7 +48,7 @@ source venv/bin/activate
 pip install hichipper
 hichipper --version
 ```
-
+sss
 Run hichipper on the h3k27ac_outputs folder from HiC-Pro.
 ```bash
 hichipper --out h3k27ac_hichipper --make-ucsc  hichipper.yaml
