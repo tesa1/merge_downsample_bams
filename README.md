@@ -26,7 +26,7 @@ Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq2
 samtools merge -@10 foxa1_healthy_2.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam wz2120.mq20.bam wz2136.mq20.bam wz2138.mq20.bam wz2139.mq20.bam wz2163.mq20.bam wz2175.mq20.bam 
 ```
 
-![Screenshot](screenshot.png)
+![Screenshot](test_screen.png)
 
 This will create h3k27ac_outputs folder with mapping and HiC analysis results
 
