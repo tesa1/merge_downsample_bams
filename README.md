@@ -39,22 +39,22 @@ Now use samtools flagstat to get the number of mapped reads in your new file.
 The new file `foxa1_healthy.bam` has X mapped reads. 
 
  ```bash
-samtools flagstat foxa1_healthy_3.bam > foxa1_healthy_3.flag
+samtools flagstat foxa1_healthy.bam > foxa1_healthy.flag
 
-cat foxa1_healthy_3.flag
+cat foxa1_healthy.flag
 ```
 
 ![Screenshot](cat_foxa1_healthy_flagstat.png)
 
 ## Downsample the Category A merged file to around 20 million reads and index the file ##
 Next, we need to downample the new file to a managable size which is similar to most regular individual ChIP-seq samples in the lab (~20M reads). To do this we use samtools view subsample flag with the fraction of sample needed to reach target of 20M reads. 
-For this example we simply divide 20M by the number of newly merged file mapped reads. 20,000,000/191,579,221 = 0.104395455
+For this example we simply divide 20M by the number of newly merged file mapped reads. 20,000,000/55,524,941 = 0.360198
 
 
 ```bash
-samtools view -s 0.10 foxa1_healthy_2.bam > foxa1_healthy_2_ds.bam
+samtools view -s 0.36 foxa1_healthy_3.bam > foxa1_healthy_3_ds.bam
 
-samtools index foxa1_healthy_2_ds.bam
+samtools index foxa1_healthy_3_ds.bam
 ```
 
 
