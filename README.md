@@ -67,7 +67,7 @@ cat foxa1_healthy_ds.flag
 
 ## Do the same for Category B files ## 
 
-Based on the top line in the foxa1_primary.flag file you can calculate the fraction (N) to input into the dowsample command to obtain close to 20M reads.
+Based on the top line in the foxa1_primary.flag (N) file you can calculate the fraction (fraction_n) to input into the dowsample command to obtain close to 20M reads.
 
 For example 20000000/N = fraction_n
 
