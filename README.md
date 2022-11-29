@@ -28,7 +28,7 @@ Use samtools merge to create a new file `foxa1_healthy.bam` from the other filte
 Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very 
 big file as you are merging many bam files together. 
 
- ```bash
+```bash
 samtools merge -@8 foxa1_healthy.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam 
 
 samtools index foxa1_healthy.bam
@@ -38,7 +38,7 @@ samtools index foxa1_healthy.bam
 Now use samtools flagstat to get the number of mapped reads in your new file. 
 The new file `foxa1_healthy.bam` has 55524941 mapped reads. 
 
- ```bash
+```bash
 samtools flagstat foxa1_healthy.bam > foxa1_healthy.flag
 
 cat foxa1_healthy.flag
