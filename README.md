@@ -34,7 +34,6 @@ samtools merge -@8 foxa1_healthy.bam wz2086.filtered.bam wz2088.filtered.bam wz2
 samtools index foxa1_healthy.bam
 ```
 
-
  ## Check the mapped reads of the newly merged Category A file ##
 Now use samtools flagstat to get the number of mapped reads in your new file. 
 The new file `foxa1_healthy.bam` has 55524941 mapped reads. 
@@ -47,6 +46,25 @@ cat foxa1_healthy.flag
 
 ![Screenshot](cat_foxa1_healthy_flagstat.png)
 
+## Downsample Category A file to roughly 20M reads ##
+Use samtools view to downample a file (-b) by a fraction (-s) to obtain roughly 20M reads.
+
+```bash
+samtools view -s 0.36 -b foxa1_healthy.bam > foxa1_healthy_ds.bam
+
+samtools index foxa1_healthy_ds.bam
+```
+
+## Double-check you now have rougly 20M reads in Category A downsampled file
+
+```bash
+samtools flagstat foxa1_healthy_ds.bam > foxa1_healthy_ds.flag
+
+cat foxa1_healthy_ds.flag
+```
+
+![Screenshot](cat_foxa1_healthy_ds_flagstat.png)
+
 ## Do the same for Category B files ## 
 
 ```bash
@@ -57,4 +75,6 @@ samtools index foxa1_primary.bam
 samtools flagstat foxa1_primary.bam > foxa1_primary.flag
 ```
 
-Based on the top line in the foxa1_primary.flag file you can calculate the 
+Based on the top line in the foxa1_primary.flag file you can calculate the fraction to input into the dowsample command to obtain close to 20M reads.
+
+For example 
