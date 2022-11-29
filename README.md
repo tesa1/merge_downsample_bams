@@ -4,7 +4,7 @@ Provided are the Zwart lab approved basic steps to merge bam files from a ChIP-s
 
 ## Vignette Info
 
-Here we show the basic steps for merging filtered bam files in two different categories so that they can be compared in an ESeq/deepTools profile or heatmap for specific regions. This is a real-world example using real-world data **(thanks, Yanyun Zhu!)**. The data come from FOXA1 ChIP-seq experiments of normal (healthy) and primary prostate cancer samples. Please do not disseminate or interpret these data, they are for instructional purposes only. 
+Here we show the basic steps for merging filtered bam files in two different categories so that they can be compared in an ESeq/deepTools profile or tornado/heatmap for specific regions. This is a realistic example of FOXA1 ChIP-seq data from normal (healthy) and primary prostate cancer samples. Please do not disseminate or interpret these data, they are for instructional purposes only. 
 
 Requirements for this tutorial are familiarity with:
 
@@ -23,13 +23,13 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
 **Zwart lab reproducibility means you observe these approved methods and do not deviate from them unless you have very specific scientific reasons**. In this case, ask for bioinformatic help.
 
 
- ## Merging and indexing of filtered bam files from Category A ##
+ ## Merging and indexing of filtered bam (MQ20) files from Category A ##
 Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. 
 Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very 
 big file as you are merging 10 bam files together. 
 
  ```bash
-samtools merge -@8 foxa1_healthy.bam wz2086.filtered.bam wz2088.filtered.bam wz2090.filtered.bam 
+samtools merge -@8 foxa1_healthy.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam 
 
 samtools index foxa1_healthy.bam
 ```
@@ -72,7 +72,7 @@ Based on the top line in the foxa1_primary.flag (N) file you can calculate the f
 For example 20000000/N = fraction_n
 
 ```bash
-samtools merge -@8 foxa1_primary.bam file1.bam file2.bam file3.bam file4.bam 
+samtools merge -@8 foxa1_primary.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam file4.filtered.bam 
 
 samtools index foxa1_primary.bam
 
