@@ -19,15 +19,11 @@ This vignette assumes you have aligned and filtered (MQ20) bam files for your sa
 We also assume you have looked at the snakePipes ChIP-seq pipeline /QC_report/QC_report_all.tsv file for your experiments and have determined the read counts are enough (at least 20M reads/sample) and that QC metrics like Fraction of Reads in Peaks (FRiP) are acceptable and roughly similar between experiments (within ChIP-seq factors, eg. H3K27ac) and not significantly different between comparisons. If not or you do not know, ask for bioinformatic help, you may need to do additional sequencing.
 
 
- ## Installation and use of HiC-Pro ##
-Hi-C Pro can be installed here from https://github.com/nservant/HiC-Pro
-
-On darwin, using downloaded version of HiC-Pro.2.11 from https://github.com/nservant/HiC-Pro/releases and installed in /home/t.severson/tools/HiC-Pro-2.11.1.install/bin/. Config file was changed to suit the necessary requirements (bowtie2 and samtools 1.9 locations).
-
-Move fastq sample folders into folder h3k27ac_rawdata. 
+ ## Merging of filtered bam files from category A with samtools ##
+Use samtools merge to create a new file `foxa1_healthy_2.bam` from the other mq20.bam files listed. Additionally, we use a flag to run this on 10 cores to speed up the process. Note, this will create a very big file as you are merging 10 bam files together. 
 
  ```bash
-/home/t.severson/tools/HiC-Pro-2.11.1.install/bin/HiC-Pro -i h3k27ac_rawdata/ -o h3k27ac_outputs -c config-hicpro.txt
+samtools merge -@10 foxa1_healthy_2.bam wz2086.mq20.bam wz2088.mq20.bam wz2090.mq20.bam wz2120.mq20.bam wz2136.mq20.bam wz2138.mq20.bam wz2139.mq20.bam wz2163.mq20.bam wz2175.mq20.bam 
 ```
 
 This will create h3k27ac_outputs folder with mapping and HiC analysis results
