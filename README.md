@@ -30,7 +30,6 @@ big file as you are merging many bam files together.
 
 ```bash
 samtools merge -@8 foxa1_healthy.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam 
-
 samtools index foxa1_healthy.bam
 ```
 
@@ -40,7 +39,6 @@ The new file `foxa1_healthy.bam` has 55524941 mapped reads.
 
 ```bash
 samtools flagstat foxa1_healthy.bam > foxa1_healthy.flag
-
 cat foxa1_healthy.flag
 ```
 
@@ -51,7 +49,6 @@ Use samtools view to downample a file (-b) by a fraction (-s) to obtain roughly 
 
 ```bash
 samtools view -s 0.36 -b foxa1_healthy.bam > foxa1_healthy_ds.bam
-
 samtools index foxa1_healthy_ds.bam
 ```
 
@@ -59,7 +56,6 @@ samtools index foxa1_healthy_ds.bam
 
 ```bash
 samtools flagstat foxa1_healthy_ds.bam > foxa1_healthy_ds.flag
-
 cat foxa1_healthy_ds.flag
 ```
 
@@ -80,21 +76,14 @@ For example 20000000/N = fraction_n
 
 ```bash
 samtools merge -@8 foxa1_primary.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam file4.filtered.bam 
-
 samtools index foxa1_primary.bam
-
 samtools flagstat foxa1_primary.bam > foxa1_primary.flag
-
 samtools view -s fraction_n -b foxa1_primary.bam > foxa1_primary_ds.bam
-
 samtools index foxa1_primary_ds.bam
-
 samtools flagstat foxa1_primary_ds.bam > foxa1_primary_ds.flag
-
 rm foxa1_primary.bam
-
 rm foxa1_primary.bam.bai
 ```
 
 ## You can now use these downsampled bam files to look at comparison plots ##
-Note, for deeptools, you'll first need to convert your files to bigwig. 
+** Note, for deeptools, you'll first need to convert your files to bigwig. **
