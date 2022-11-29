@@ -67,14 +67,21 @@ cat foxa1_healthy_ds.flag
 
 ## Do the same for Category B files ## 
 
+Based on the top line in the foxa1_primary.flag file you can calculate the fraction (N) to input into the dowsample command to obtain close to 20M reads.
+
+For example 20000000/N = fraction_n
+
 ```bash
 samtools merge -@8 foxa1_primary.bam file1.bam file2.bam file3.bam file4.bam 
 
 samtools index foxa1_primary.bam
 
 samtools flagstat foxa1_primary.bam > foxa1_primary.flag
+
+samtools view -s fraction_n -b foxa1_primary.bam > foxa1_primary_ds.bam
+
+samtools index foxa1_primary_ds.bam
+
+samtools flagstat foxa1_primary_ds.bam > foxa1_primary_ds.flag
 ```
 
-Based on the top line in the foxa1_primary.flag file you can calculate the fraction to input into the dowsample command to obtain close to 20M reads.
-
-For example 
