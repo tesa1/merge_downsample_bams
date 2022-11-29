@@ -26,7 +26,7 @@ In this tutorial for 2 categories of samples (Category A and B) we will merge th
  ## Merging and indexing of filtered bam (MQ20) files from Category A ##
 Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. 
 Additionally, we use a flag to run this on 8 cores to speed up the process. Note, this will create a very 
-big file as you are merging 10 bam files together. 
+big file as you are merging many bam files together. 
 
  ```bash
 samtools merge -@8 foxa1_healthy.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam 
@@ -65,6 +65,13 @@ cat foxa1_healthy_ds.flag
 
 ![Screenshot](cat_foxa1_healthy_ds_flagstat.png)
 
+## Clean up -- remove non-downsampeled files because they're very big ##
+
+```bash
+rm foxa1_healthy.bam
+rm foxa1_healthy.bam.bai
+```
+
 ## Do the same for Category B files ## 
 
 Based on the top line in the foxa1_primary.flag (N) file you can calculate the fraction (fraction_n) to input into the dowsample command to obtain close to 20M reads.
@@ -83,6 +90,10 @@ samtools view -s fraction_n -b foxa1_primary.bam > foxa1_primary_ds.bam
 samtools index foxa1_primary_ds.bam
 
 samtools flagstat foxa1_primary_ds.bam > foxa1_primary_ds.flag
+
+rm foxa1_primary.bam
+
+rm foxa1_primary.bam.bai
 ```
 
 ## You can now use these downsampled bam files to look at comparison plots ##
