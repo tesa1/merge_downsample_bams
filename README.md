@@ -35,7 +35,7 @@ samtools index foxa1_healthy.bam
 
 ## Check the mapped reads of the newly merged Category A file ##
 Now use samtools flagstat to get the number of mapped reads in your new file. 
-The new file `foxa1_healthy.bam` has 55524941 mapped reads. 
+The new file `foxa1_healthy.bam` has 55524941 mapped reads. You can see this from the top line of the .flag file  
 
 ```bash
 samtools flagstat foxa1_healthy.bam > foxa1_healthy.flag
