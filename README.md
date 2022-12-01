@@ -120,9 +120,17 @@ conda activate deeptools
 bamCoverage -b foxa1_healthy_ds.bam -o foxa1_healthy_ds.bw
 bamCoverage -b foxa1_primary_ds.bam -o foxa1_primary_ds.bw
 
-# make a matrix of your 
+# make a matrix of your files and the coverage at your regions
 computeMatrix reference-point -S foxa1_healthy_ds.bw foxa1_primary_ds.bw -R foxa1_peaks.bed  -b 2000 -a 2000 --numberOfProcessors 8 --outFileName foxa1_healthy_primary_vs_foxa1_peaks_matrix.gz --referencePoint center
 
 # plot the data in a profile with standard-error shading and labeling
 plotProfile -m foxa1_healthy_primary_vs_foxa1_peaks_matrix.gz --plotType se --perGroup -out foxa1_healthy_primary_vs_foxa1_peaks_profile.pdf --regionsLabel FOXA1_sites
+
+# plot a basic heatmap/tornado of the data
+plotHeatmap -m foxa1_healthy_primary_vs_foxa1_peaks_matrix.gz  -out foxa1_healthy_primary_vs_foxa1_peaks_heatmap.pdf --regionsLabel FOXA1_sites --samplesLabel healthy_FOXA1 primary_FOXA1
+
+# close your environment
+conda deactivate
+```
+
 
