@@ -116,7 +116,7 @@ Assumes you have
 # activate deeptools
 conda activate deeptools
 
-# make bigwigs from your bam file (default settings)
+# make bigwigs from your bam file (default data bin settings)
 bamCoverage -b foxa1_healthy_ds.bam -o foxa1_healthy_ds.bw
 bamCoverage -b foxa1_primary_ds.bam -o foxa1_primary_ds.bw
 
