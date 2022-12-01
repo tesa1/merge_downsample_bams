@@ -8,7 +8,7 @@ With comparison plots, you can show the differences in signal strength for diffe
 ![Screenshot](profile_example.png)
 
 
-Some things to consider when comparing signal across datasets: you need to make sure that you don't see a difference in signal because one set of data has more samples than the other dataset(s). To avoid that, for each data set individually, we merge the filtered aligned bam files within the set, check the number of reads in the merged file and then downsample to a target number of reads (~20M). This way, when you have done this with all the sets you want to compare, you have datasets of roughly equivalent read counts. The resulting files can be used in an ESeq/deepTools profile or tornado/heatmap for your regions of interest. This is a realistic example of FOXA1 ChIP-seq data from normal (healthy) and primary prostate cancer samples. Please do not disseminate or interpret these data, they are for instructional purposes only. 
+Some things to consider when comparing signal across datasets: you need to make sure that you don't see a difference in signal because one set of data has more samples than the other dataset(s). To avoid that, for each data set individually, we merge the filtered aligned bam files within the set, check the number of reads in the merged file and then downsample to a target number of reads (~20M). This way, when you have done this with all the sets you want to compare, you have datasets of roughly equivalent read counts. The resulting files can be used in an EaSeq/deepTools profile or tornado/heatmap for your regions of interest. This is a realistic example of FOXA1 ChIP-seq data from normal (healthy) and primary prostate cancer samples. Please do not disseminate or interpret these data, they are for instructional purposes only. 
 
 Requirements for this tutorial are familiarity with:
 
@@ -16,7 +16,7 @@ Requirements for this tutorial are familiarity with:
 - pre-/post-GCF course from Sebastian Gregoricchio and Tesa Severson
 - Zwartlab snakePipes ChIP-seq pipeline written by former lab member Joe Siefert
 - Upstream steps to merging including alignment of fastq.gz files to genome, filtering aligned files with MQ20
-- samtools
+- samtools 
 
   
 This vignette assumes you have aligned and filtered (MQ20) bam files for your samples of interest. This can be done by running peakcalling on your samples using the Zwartlab snakePipes ChIP-seq pipeline.
@@ -74,22 +74,55 @@ rm foxa1_healthy.bam
 rm foxa1_healthy.bam.bai
 ```
 
-## Do the same for datasetB files (4 primary tumor tissue FOXA1 ChIP-seq samples)## 
+## Do the same for datasetB files (4 primary tumor tissue FOXA1 ChIP-seq samples) ## 
 
 Based on the top line in the foxa1_primary.flag (N) file you can calculate the fraction (fraction_n) to input into the dowsample command to obtain close to 20M reads.
 
 For example 20000000/N = fraction_n
 
 ```bash
+# merge files
 samtools merge -@8 foxa1_primary.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam file4.filtered.bam 
+
+# index
 samtools index foxa1_primary.bam
+
+# get number of reads mapped
 samtools flagstat foxa1_primary.bam > foxa1_primary.flag
+
+# check number of reads mapped
+cat foxa1_primary.flag
+
+# downsample according to number of reads mapped and target number of reads
 samtools view -s fraction_n -b foxa1_primary.bam > foxa1_primary_ds.bam
+
+# index 
 samtools index foxa1_primary_ds.bam
+
+# double-check your dowsample
 samtools flagstat foxa1_primary_ds.bam > foxa1_primary_ds.flag
+
+# cleanup
 rm foxa1_primary.bam
 rm foxa1_primary.bam.bai
 ```
 
 ## You can now use these downsampled bam files to look at comparison plots ##
-** Note, for deeptools, you'll first need to convert your files to bigwig. **
+In EaSeq you can use the ds.bam files directly with a bed file of interest to make your profile or tornado plots.  For deeptools, you need to first convert to bigwig.
+
+## Deeptools commands to make a comparison profile plot with bed file of interest
+Assumes you have 
+```bash
+# activate deeptools
+conda activate deeptools
+
+# make bigwigs from your bam file (default settings)
+bamCoverage -b foxa1_healthy_ds.bam -o foxa1_healthy_ds.bw
+bamCoverage -b foxa1_primary_ds.bam -o foxa1_primary_ds.bw
+
+# make a matrix of your 
+computeMatrix reference-point -S foxa1_healthy_ds.bw foxa1_primary_ds.bw -R foxa1_peaks.bed  -b 2000 -a 2000 --numberOfProcessors 8 --outFileName foxa1_healthy_primary_vs_foxa1_peaks_matrix.gz --referencePoint center
+
+# plot the data in a profile with standard-error shading and labeling
+plotProfile -m foxa1_healthy_primary_vs_foxa1_peaks_matrix.gz --plotType se --perGroup -out foxa1_healthy_primary_vs_foxa1_peaks_profile.pdf --regionsLabel FOXA1_sites
+
