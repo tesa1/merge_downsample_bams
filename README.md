@@ -1,6 +1,6 @@
 # Zwart lab standard workflow to merge ChIP-seq bam files for use in comparison profile/tornado heatmap plots -- instructions for the RHPC server
 
-Provided are the Zwart lab approved basic steps to merge bam files from a ChIP-seq experiment to make comparison profile plots when running on the RHPC server.
+Provided is a Zwart lab approved method to merge bam files from a ChIP-seq experiment to make comparison profile plots when running on the RHPC server.
 
 ## Vignette Info
 
