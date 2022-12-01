@@ -49,6 +49,8 @@ cat foxa1_healthy.flag
 ![Screenshot](cat_foxa1_healthy_flagstat.png)
 
 ## Downsample datasetA file to roughly 20M reads ##
+Note, you can never get exactly 20M reads with this downsample command because it downsamples reads randomly and the fraction you input is not precise. As long as it’s very close to 20M it’s fine. 
+
 Use samtools view to downample a file (-b) by a fraction (-s) to obtain roughly 20M reads.
 
 ```bash
