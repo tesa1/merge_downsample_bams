@@ -25,7 +25,7 @@ We also assume you have looked at the snakePipes ChIP-seq pipeline /QC_report/QC
 
 In this tutorial we want to compare 2 datasets of samples (datasetA and datasetB). First we will merge the files of interest, index them, check their mapped reads and downsample accordingly.
 
-This is just one way to compare datasets in a normalized fashion. There are other (also correct) ways to do this, but this manner requires very few steps and is relatively convenient. 
+**This is just one way to compare datasets in a normalized fashion. There are other (also correct) ways to do this, but this manner requires very few steps and is relatively convenient.**
 
 ## Merging and indexing of filtered bam (MQ20) files from datasetA (3 healthy tissue FOXA1 ChIP-seq samples) ##
 Use samtools merge to create a new file `foxa1_healthy.bam` from the other filtered.bam files listed. 
