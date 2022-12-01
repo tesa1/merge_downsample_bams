@@ -33,7 +33,10 @@ Additionally, we use a flag to run this on 8 cores to speed up the process. Note
 big file as you are merging many bam files together. 
 
 ```bash
+# merge files
 samtools merge -@8 foxa1_healthy.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam 
+
+# index
 samtools index foxa1_healthy.bam
 ```
 
@@ -42,7 +45,10 @@ Now use samtools flagstat to get the number of mapped reads in your new file.
 The new file `foxa1_healthy.bam` has 55524941 high-quality mapped reads. You can see this from the top line of the .flag file  
 
 ```bash
+# make a flagstat file to see the number of mapped reads
 samtools flagstat foxa1_healthy.bam > foxa1_healthy.flag
+
+# view the flagstat file on the terminal
 cat foxa1_healthy.flag
 ```
 
@@ -54,14 +60,20 @@ Note, you can never get exactly 20M reads with this downsample command because i
 Use samtools view to downample a file (-b) by a fraction (-s) to obtain roughly 20M reads.
 
 ```bash
+# downsample the merged file
 samtools view -s 0.36 -b foxa1_healthy.bam > foxa1_healthy_ds.bam
+
+# index the downsampled file
 samtools index foxa1_healthy_ds.bam
 ```
 
 ## Double-check you now have rougly 20M reads in datasetA downsampled file
 
 ```bash
+# make a flagstat file to see the number of mapped reads
 samtools flagstat foxa1_healthy_ds.bam > foxa1_healthy_ds.flag
+
+# view the flagstat file on the terminal
 cat foxa1_healthy_ds.flag
 ```
 
@@ -70,6 +82,7 @@ cat foxa1_healthy_ds.flag
 ## Clean up -- remove non-downsampled files because they're very big ##
 
 ```bash
+# remove the big bam file and it's index
 rm foxa1_healthy.bam
 rm foxa1_healthy.bam.bai
 ```
@@ -84,13 +97,13 @@ For example 20000000/N = fraction_n
 # merge files
 samtools merge -@8 foxa1_primary.bam file1.filtered.bam file2.filtered.bam file3.filtered.bam file4.filtered.bam 
 
-# index
+# index merged file
 samtools index foxa1_primary.bam
 
 # get number of reads mapped
 samtools flagstat foxa1_primary.bam > foxa1_primary.flag
 
-# check number of reads mapped
+# check number of reads mapped by viewing on the terminal
 cat foxa1_primary.flag
 
 # downsample according to number of reads mapped and target number of reads
